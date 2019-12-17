@@ -1,14 +1,21 @@
+using namespace std;
 class Node {
 private:
-	int data;
+	string movieID;
+	int numOFVotes;
+	float avgRating;
 	Node* next;
 public:
 	Node ();
-	Node(int);
-	 void setData(int);
- 	int getData();
- 	void setNext(Node*);
- 	Node* getNext();
+	Node(string, float, int);
+	 void setMovieID(string);
+ 	 string getMovieID();
+	 void setAvgRating(float);
+ 	 float getAvgRating();
+	 void setNumOfVotes(int);
+ 	 int getNumOfVotes();
+ 	 void setNext(Node*);
+ 	 Node* getNext();
 };
 class LinkedList
 {
@@ -16,15 +23,10 @@ public:
 	LinkedList ();
 
 	 Node* first;
-	 void addAtStart(int);
 	 void displayALL();
-	 void addAtEnd(int);
-	 void deleteAtStart();
-	 void deleteAtEnd();
+	 void addAtEnd(string, float, int);
 	 int sizeOfList();
-	 void removeAtIndex(int, int);
-	 void remove(int);
-	 int getAtIndex(int, int);
-	 int findValue(int);
+	 //void remove(int);
+	 //int findValue(int);
 
 };
