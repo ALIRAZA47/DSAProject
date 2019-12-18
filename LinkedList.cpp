@@ -4,9 +4,9 @@
 using namespace std;
 Node::Node()
 	{
-		movieID = " ";
-		avgRating = 0.0;
-		numOFVotes = 0;
+		movieID ;
+		avgRating ;
+		numOFVotes ;
 		next = NULL;
 	}
 Node::Node(string id, float rate, int votes)
@@ -16,12 +16,12 @@ Node::Node(string id, float rate, int votes)
 		numOFVotes = votes;
 		next = NULL;
 	}
-	void setMovieID(string str) {movieID = str;}
-	string getMovieID() { return movieID; }
-	void setAvgRating(float rate) { avgRating = rate; }
-	float getAvgRating() { return avgRating; }
-	void setNumOfVotes(int votes) { numOFVotes = votes; }
-	int getNumOfVotes() { return numOFVotes; }
+	void Node::setMovieID(string str) {movieID = str;}
+	string Node::getMovieID() { return movieID; }
+	void Node::setAvgRating(float rate) { avgRating = rate; }
+	float Node::getAvgRating() { return avgRating; }
+	void Node::setNumOfVotes(int votes) { numOFVotes = votes; }
+	int Node::getNumOfVotes() { return numOFVotes; }
 	void Node::setNext(Node* ptr) { next = ptr; }
 	Node* Node::getNext() { return next; }
 
@@ -38,8 +38,6 @@ Node::Node(string id, float rate, int votes)
 		Node* temp = first;
 		if (first != NULL)
 		{
-
-
 			while (temp != NULL)
 			{
 				std::cout << temp->getMovieID() << '\t';
@@ -60,19 +58,20 @@ Node::Node(string id, float rate, int votes)
 		if (first == NULL)
 		{
 			Node *firstNODE = new Node(id, rate, votes);
+			std::cout << "/* message */" << '\n';
 			first = firstNODE;
+			return;
 		}
 		else
 		{
 
-			Node* temp = new Node();
-			temp->setData(x);
-			Node* aariz = first;
-			while (aariz->getNext() != NULL)
+			Node* newlyMadeNode = new Node(id, rate, votes);
+			Node* tempNode = first;
+			while (tempNode->getNext() != NULL)
 			{
-				aariz = aariz->getNext();
+				tempNode = tempNode->getNext();
 			}
-			aariz->setNext(temp);
+			tempNode->setNext(newlyMadeNode);
 		}
 
 	}
