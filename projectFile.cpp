@@ -16,9 +16,12 @@ public:
   void read_Data_From_File();
   int hashFunction(float);
   void displayAll_movies();
+	void mostPopularMovie();
+	void leastPopularMovie();
 };
 SearchEngine::SearchEngine()
 {
+	read_Data_From_File();
 }
 
 int SearchEngine::hashFunction(float rate)
@@ -58,10 +61,60 @@ void SearchEngine::read_Data_From_File()
 
 void SearchEngine::displayAll_movies()
 {
-	for(int i=0; i<100;i++)
+	for(int i=9; i<100;i++)
 		chain[i].displayALL();
 }
-/* message */
+void SearchEngine::mostPopularMovie()
+{
+	int maxVotes;
+	Node* popularMovie;
+	Node* tempMovie;
+	int chain_Counter=99;
+			tempMovie = chain[chain_Counter].first;
+			popularMovie = tempMovie;
+			while(tempMovie != NULL)
+			{
+				if(tempMovie->getTotalVotes() > popularMovie->getTotalVotes())
+				{
+					popularMovie = tempMovie;
+				}
+				tempMovie = tempMovie->getNext();
+			}
+
+
+	std::cout << "=======Most Popular Movie is=======" << '\n';
+	std::cout << "Movie ID ---> "<<popularMovie->getMovieID() << '\n';
+	std::cout << "Average Rating ---> "<<popularMovie->getAvgRating() << '\n';
+	std::cout << "Total Votes ---> "<<popularMovie->getTotalVotes() << '\n';
+
+}
+
+
+void SearchEngine::leastPopularMovie()
+{
+	int maxVotes;
+	Node* leastpopular;
+	Node* tempMovie;
+	int chain_Counter=9;
+			tempMovie = chain[chain_Counter].first;
+			leastpopular = tempMovie;
+			while(tempMovie != NULL)
+			{
+				if(tempMovie->getTotalVotes() >	 leastpopular->getTotalVotes())
+				{
+					leastpopular = tempMovie;
+				}
+				tempMovie = tempMovie->getNext();
+			}
+
+
+	std::cout << "=======Least Popular Movie is=======" << '\n';
+	std::cout << "Movie ID ---> "<<leastpopular->getMovieID() << '\n';
+	std::cout << "Average Rating ---> "<<leastpopular->getAvgRating() << '\n';
+	std::cout << "Total Votes ---> "<<leastpopular->getTotalVotes() << '\n';
+
+}
+
 //end search engine
 
 /*void SearchEngine::read_Data_From_File()
@@ -97,8 +150,8 @@ void SearchEngine::displayAll_movies()
 int main()
 {
 	SearchEngine obj;
-	obj.read_Data_From_File();
-	obj.displayAll_movies();
+	obj.leastPopularMovie();
+	//obj.displayAll_movies();
 
 
   return 0;
