@@ -7,7 +7,6 @@
 using namespace std;
 const int number_of_chains = 100;
 //search Engine
-
 class SearchEngine{
 private:
 
@@ -20,8 +19,6 @@ public:
 };
 SearchEngine::SearchEngine()
 {
-  read_Data_From_File();
-
 }
 
 int SearchEngine::hashFunction(float rate)
@@ -30,6 +27,44 @@ int SearchEngine::hashFunction(float rate)
 }
 
 void SearchEngine::read_Data_From_File()
+{
+  string movie;
+  float rate;
+  long int votes;
+  int skipFirstLine = 0;
+  ifstream readingDataFile;
+  readingDataFile.open("data.txt");
+  if(readingDataFile.is_open())
+  {
+    while(!readingDataFile.eof())
+    {
+      if(skipFirstLine > 0)
+      {
+        readingDataFile >> movie;
+        readingDataFile >> rate;
+        readingDataFile >> votes;
+        chain[hashFunction(rate)].addAtEnd(movie, rate, votes);
+      }
+			else
+			{
+				readingDataFile >>movie;
+				readingDataFile >>movie;
+				readingDataFile >>movie;
+			}
+      skipFirstLine ++;
+    }
+  }
+}
+
+void SearchEngine::displayAll_movies()
+{
+	for(int i=0; i<100;i++)
+		chain[i].displayALL();
+}
+/* message */
+//end search engine
+
+/*void SearchEngine::read_Data_From_File()
 {
   string movie;
   float rate;
@@ -53,24 +88,17 @@ void SearchEngine::read_Data_From_File()
       skipFirstLine ++;
     }
   }
-}
+}*/
 
-void SearchEngine::displayAll_movies()
-{
-  int i=0;
-    while(i<number_of_chains)
-    {
-      chain[i].displayALL();
-    }
-}
+
 
 //end search engine
 
 int main()
 {
-  SearchEngine obj;
-  obj.displayAll_movies();
-
+	SearchEngine obj;
+	obj.read_Data_From_File();
+	obj.displayAll_movies();
 
 
   return 0;

@@ -1,32 +1,33 @@
+#include <string>
 using namespace std;
-class Node {
+class Node
+{
 private:
 	string movieID;
-	int numOFVotes;
 	float avgRating;
-	Node* next;
+	int totalVotes;
+	Node *next;
 public:
-	Node ();
-	Node(string, float, int);
-	 void setMovieID(string);
- 	 string getMovieID();
-	 void setAvgRating(float);
- 	 float getAvgRating();
-	 void setNumOfVotes(int);
- 	 int getNumOfVotes();
- 	 void setNext(Node*);
- 	 Node* getNext();
+	Node();
+	Node(string id, float rate, int votes);
+	void setMovieID(string id);
+	string getMovieID();
+	void setAvgrating(float rate);
+	float getAvgRating();
+	void setTotalVotes(int votes);
+	int getTotalVotes();
+	void setNext(Node *nxt);
+	Node *getNext();
 };
+
+
 class LinkedList
 {
 public:
-	LinkedList ();
-
-	 Node* first;
-	 void displayALL();
-	 void addAtEnd(string, float, int);
-	 int sizeOfList();
-	 //void remove(int);
-	 //int findValue(int);
-
+	Node *first;
+	Node *last;
+	LinkedList();
+	void addAtEnd(string id, float rate, int votes);
+	int sizeOfList();
+	void displayALL();
 };
