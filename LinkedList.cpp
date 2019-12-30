@@ -6,30 +6,23 @@ using namespace std;
 //node class implementation
 Node::Node()
 {
-	next =NULL;
+	//sets default attributes of a movie
+	next = NULL;
 	movieID = " ";
-	avgRating =0.0;
+	avgRating = 0.0;
 	totalVotes = 0;
 }
 Node::Node(string id, float rate, int votes)
 {
+	//sets attributes provided to constructor
 	movieID = id;
 	avgRating = rate;
 	totalVotes = votes;
 	next = NULL;
 }
-void Node::setNext(Node* nxt)
-{
-	next = nxt;
-}
-Node* Node::getNext()
-{
-	return next;
-}
-void Node::setMovieID(string id)
-{
-	movieID = id;
-}
+void Node::setNext(Node* nxt) {	next = nxt;}
+Node* Node::getNext() {return next;}
+void Node::setMovieID(string id) { movieID = id; }
 string Node::getMovieID(){return movieID;}
 void Node::setAvgrating(float rate){avgRating = rate;}
 float Node::getAvgRating(){ return avgRating;}
@@ -42,6 +35,8 @@ LinkedList::LinkedList()
 	first = NULL;
 	last = NULL;
 }
+
+//function implementaion of adding movies in list
 void LinkedList::addAtEnd(string id, float rate, int votes)
 {
 	if(first == NULL)
@@ -49,9 +44,6 @@ void LinkedList::addAtEnd(string id, float rate, int votes)
 		Node *newNode = new Node(id, rate, votes);
 		first = newNode;
 		last = newNode;
-		//std::cout << first->getTotalVotes() << '\n';
-		//std::cout << first->getMovieID() << '\n';
-		//std::cout << first->getAvgRating() << '\n';
 	}
 	else
 	{
@@ -72,12 +64,13 @@ int LinkedList::sizeOfList()
 			temp = temp->getNext();
 			counter++;
 		}
-		return ++counter;
+		return ++counter;		//returns number of movie objects or nodes
 	}
 	else
-		return 0;
+		return 0;		//returns 0 if no movie in the list
 }
 
+//implementaion of display all moives in list, function
 void LinkedList::displayALL()
 	{
 		Node* temp = first;
@@ -91,6 +84,7 @@ void LinkedList::displayALL()
 				temp = temp->getNext();
 			}
 		}
+		//if there is no movie in the list
 		else {
 			cout << " No Member In the List" << endl;
 		}

@@ -1,3 +1,17 @@
+/*
+*The aim of this project is to make a small search engine
+*This project is IMDb based search Engine a small IMDb ;)
+/ ****************AIMS and objectives*************** /
+*to search for most popular movie
+*to search for least popular movie
+*to search for those movies having same rating
+/ *****************Group Members************* /
+*** Mahnoor Awan ***
+*** Hamdan Ali Baloch ***
+*** Ali Raza Khan ***
+*/
+
+//  Main File of Project  \\ //
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -5,82 +19,91 @@
 #include <stdio.h>
 #include "LinkedList.h"
 using namespace std;
-const int number_of_chains = 100;
-//search Engine
+const int number_of_chains = 100;  //total number of Chians in seperate chaining
+
+// Search Engine class Definition
 class SearchEngine{
 private:
 
 public:
   LinkedList chain[number_of_chains];
-  SearchEngine ();
-  void read_Data_From_File();
-  int hashFunction(float);
-  void displayAll_movies();
-	void mostPopularMovie();
-	void leastPopularMovie();
-	int sameRating(float );
+  SearchEngine ();    //constructor
+  void read_Data_From_File();   //function to read data from file
+  int hashFunction(float);    //function to hash data
+  void displayAll_movies();   //funcion to display data of movies
+	void mostPopularMovie();   //function to find Most Popular Movie
+	void leastPopularMovie();    //function to find the least popular movie
+	int sameRating(float );    //function to find number of sane rated movies
 };
+
+//defiunition of Search Engine class
 SearchEngine::SearchEngine()
 {
-	read_Data_From_File();
+	read_Data_From_File();     //function call to read data from file containing data of movies
 }
 
 int SearchEngine::hashFunction(float rate)
 {
-  return (rate*10) -1;
+  return (rate*10) -1;    //returns index AvgRating * 10 subtracting 1
 }
 
+//reading data from file
 void SearchEngine::read_Data_From_File()
 {
-  string movie;
-  float rate;
-  long int votes;
-  int skipFirstLine = 0;
-  ifstream readingDataFile;
+  string movie;   //local variable containing movie name
+  float rate;   //local variable containing movie rating
+  long int votes;   //local variable containing number of votes
+  int skipFirstLine = 0;    //counter t oskip first line while data file
+  ifstream readingDataFile;   //object to stream a file ALSO counter for total number of movies
   readingDataFile.open("data.txt");
   if(readingDataFile.is_open())
   {
-    while(!readingDataFile.eof())
+    while(!readingDataFile.eof())   //read file till the end of file
     {
       if(skipFirstLine > 0)
       {
         readingDataFile >> movie;
         readingDataFile >> rate;
         readingDataFile >> votes;
-        chain[hashFunction(rate)].addAtEnd(movie, rate, votes);
+        chain[hashFunction(rate)].addAtEnd(movie, rate, votes);   //adding movie in specific chain
       }
 			else
 			{
-				readingDataFile >>movie;
-				readingDataFile >>movie;
-				readingDataFile >>movie;
+        //catch first line as a junk line
+				readingDataFile >> movie;
+				readingDataFile >> movie;
+				readingDataFile >> movie;
 			}
-      skipFirstLine ++;
+      skipFirstLine ++;   //increamenting the counter for countng
     }
   }
 }
 
+//***********************************************//
+//implementaion of display function
 void SearchEngine::displayAll_movies()
 {
-	for(int i=9; i<100;i++)
-		chain[i].displayALL();
+	for(int i=9; i<100;i++)    //loop to print all movies data
+		chain[i].displayALL();  //call to function of linkedList or list
 }
+
+//implementaion of most popular movie function
 void SearchEngine::mostPopularMovie()
 {
-	int maxVotes;
-	Node* popularMovie;
-	Node* tempMovie;
-	int chain_Counter=99;
-			tempMovie = chain[chain_Counter].first;
-			popularMovie = tempMovie;
-			while(tempMovie != NULL)
+	int maxVotes;  //dummy variable which cointains maximum votes
+	Node* popularMovie;  //pointer pointing most popular movie
+	Node* tempMovie;   //temporary pointer
+	int chain_Counter=99;    //selecting highest rated movie
+	tempMovie = chain[chain_Counter].first;    //temporary pointer now pointing to chain of highest rate
+  popularMovie = tempMovie;
+	while(tempMovie != NULL)   //loop to find movie containing max number of votes
+	{
+		if(tempMovie->getTotalVotes() > popularMovie->getTotalVotes())
 			{
-				if(tempMovie->getTotalVotes() > popularMovie->getTotalVotes())
-				{
-					popularMovie = tempMovie;
-				}
-				tempMovie = tempMovie->getNext();
+				popularMovie = tempMovie;
 			}
+		tempMovie = tempMovie->getNext();   //traversing the list ot find max votes
+	}
 
 
 	std::cout << "=======Most Popular Movie is=======" << '\n';
@@ -90,12 +113,12 @@ void SearchEngine::mostPopularMovie()
 
 }
 
-
+//implementaion of least popular movie function
 void SearchEngine::leastPopularMovie()
 {
-	int maxVotes;
-	Node* leastpopular;
-	Node* tempMovie;
+	int maxVotes;  //dummy variable containing max votes
+	Node* leastpopular;  //pointer poining towards leat popular movie
+	Node* tempMovie;   //temporary pointer
 	int chain_Counter=9;
 			tempMovie = chain[chain_Counter].first;
 			leastpopular = tempMovie;
@@ -116,18 +139,16 @@ void SearchEngine::leastPopularMovie()
 
 }
 
+//implementaion of same rating function
 int SearchEngine::sameRating(float rate)
 {
-	if(rate >= 1.0 && rate <=10.0)
-		return chain[hashFunction(rate)].sizeOfList();
+  if(rate >= 1.0 && rate <=10.0)   //checks whether rating match the  criteria of rating
+		return chain[hashFunction(rate)].sizeOfList();    //return number of same  rated movies
 	else
-		return -1;
+		return -1;    //return -1 if rating does not match criteria of rating
 }
 
-
-
-
-
+//***********************************************//
 //end search engine
 
 int main()
@@ -137,14 +158,13 @@ int main()
 	float rate;
 	char choiceForFunctions;
 	char choiceToExit, choiceToExit1;
-	std::cout << "===========================================\n" << '\n';
-	std::cout << "=========Welcome to Search Engine==========\n" << '\n';
+	std::cout << "===========================================||\n" << '\n';
+	std::cout << "=========Welcome to Search Engine==========||\n" << '\n';
 	std::cout << "===========================================" << '\n';
 
 	do
 	{
 		std::cout << "\n===========================================" << '\n';
-		std::cout << "===========================================" << '\n';
 		std::cout << "Enter ~1~ to Find Which Movie is Most Popular---" << '\n';
 		std::cout << "Enter ~2~ to Find Which Movie is Least Popular---" << '\n';
 		std::cout << "Enter ~3~ to Find How Many Movies of a certain Rating are---" << '\n';
@@ -152,16 +172,27 @@ int main()
 		std::cin >> choiceForFunctions;
 		if(choiceForFunctions == '1')
 		{
-			sEngine.mostPopularMovie();
+      std::cout << "\n===========================================" << '\n';
+      std::cout << "*******************************************\n" << '\n';
+      sEngine.mostPopularMovie();
+      std::cout << "\n*******************************************" << '\n';
+      std::cout << "===========================================" << '\n';
 		}
 		else if(choiceForFunctions == '2')
 		{
+      std::cout << "\n===========================================" << '\n';
+      std::cout << "*******************************************\n" << '\n';
 			sEngine.leastPopularMovie();
+      std::cout << "\n*******************************************" << '\n';
+      std::cout << "===========================================" << '\n';
 		}
 		else if(choiceForFunctions == '3')
 		{
-			std::cout << "Enter Rating (Average Rating) for which You Want to Know Number of Movives---\n" << '\n';
+      std::cout << "\n===========================================" << '\n';
+      std::cout << "*******************************************\n" << '\n';
+			std::cout << "Enter Rating (Average Rating) for which You Want to Know Number of Movives---->>  ";
 			std::cin >> rate;
+      std::cout << "\n" << '\n';
 			countOfSameRatedMovies=sEngine.sameRating(rate);
 			if(countOfSameRatedMovies == -1)
 			{
@@ -172,6 +203,8 @@ int main()
 				std::cout << "Movies of "<<rate<<" Average rate are ==> "<<countOfSameRatedMovies << '\n';
 
 			}
+      std::cout << "\n*******************************************" << '\n';
+      std::cout << "===========================================" << '\n';
 		}
 		else
 		{
