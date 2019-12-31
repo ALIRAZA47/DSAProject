@@ -1,3 +1,9 @@
+/*
+This is CPP file of linkedList header file
+This includes all the functionality nad implementation of 
+linkedlist
+
+*/
 #include <iostream>
 #include <string>
 #include "LinkedList.h"

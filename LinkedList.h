@@ -1,5 +1,6 @@
 /*
 		Header file which contains declaration of linked list data type
+	   *Contains the Declaration of Linked list class
 */
 #include <string>
 using namespace std;
